@@ -1,9 +1,16 @@
 import time
+import os
+from dotenv import load_dotenv
 from datetime import datetime, date, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+
+# Loads data from the .env file for username and password
+load_dotenv()
+username = os.getenv("USERNAME")
+password = os.getenv("PASSWORD")
 
 # Initialize options for Web Driver
 options = Options()
@@ -25,8 +32,16 @@ driver.get(link)
 driver.maximize_window() 
 
 # Signs into the account
-username = USERNAME
-password = PASSWORD
+signIn = driver.find_element("xpath", "//a[contains(concat(' ',normalize-space(@class),' '),' top-bar__margined ')]")
+signIn.click()
+time.sleep(3)
+emailField = driver.find_element("xpath", "//input[@id='email']")
+passwordField = driver.find_element("xpath", "//input[@id='password']")
+emailField.send_keys(username)
+passwordField.send_keys(password)
+logInButton = driver.find_element("xpath", "//button[contains(concat(' ',normalize-space(@class),' '),' submit-button ')]")
+logInButton.click()
+
 time.sleep(5)
 
 # Creates a list of available Tee Times
