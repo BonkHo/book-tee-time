@@ -24,17 +24,15 @@ link += bookDate.strftime("%Y-%m-%d")
 driver.get(link)
 driver.maximize_window() 
 
-# Creates a list of available Tee Times
-teeTimes = driver.find_elements("xpath", "//li[contains(@class, 'reservation-group-item')]")
-print(teeTimes)
-
-# Scrolls the page down
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
+# Signs into the account
+username = USERNAME
+password = PASSWORD
 time.sleep(5)
 
-# Prints all the available tee times
-for teeTime in teeTimes:
-  print(teeTime.get_attribute("innerHTML"))
+# Creates a list of available Tee Times
+teeTimes = driver.find_elements("xpath", "//span[contains(concat(' ',normalize-space(@class),' '),' start-time ')]")
 
+# Clicks on the first available Tee Time
+teeTimes[0].click()
 
+print("Completed")
