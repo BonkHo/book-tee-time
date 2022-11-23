@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 from webdriver_manager.chrome import ChromeDriverManager
+import undetected_chromedriver as uc
 
 # Loads data from the .env file for username and password
 load_dotenv()
@@ -15,14 +16,19 @@ username = os.getenv("USERNAME")
 password = os.getenv("PASSWORD")
 
 # Initialize options for Web Driver
-options = Options()
-options.add_experimental_option("detach", True)
-options.add_argument("/Applications/Google Chrome.app")
-service = Service(ChromeDriverManager().install())
+options = webdriver.ChromeOptions()
+options.headless = True
+options.add_argument("start-maximized")
+options.add_experimental_option("excludeSwitches", ["enable-automation"])
+options.add_experimental_option('useAutomationExtension', False)
+# options.add_experimental_option('detach', True)
+options.add_argument('user-data-dir=selenium') 
+# service = Service(ChromeDriverManager().install())
 
 
 # Initialize the Web Driver and set options
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+driver = uc.Chrome(options=options)
+# service=Service(ChromeDriverManager().install())
 
 # Initialize current Date and bookDate
 today = date.today()
@@ -37,26 +43,26 @@ driver.get(link)
 driver.maximize_window() 
 
 # Load Cookies
-try:
-  cookie = pickle.load(open("cookie.pkl", "rb")) #loading from pickle file
-  for i in cookie:
-      driver.add_cookie(i)
-  print('Cookies added.')
-except Exception as e:
-  print(e)
+# try:
+#   cookie = pickle.load(open("cookie.pkl", "rb")) #loading from pickle file
+#   for i in cookie:
+#       driver.add_cookie(i)
+#   print('Cookies added.')
+# except Exception as e:
+#   print(e)
 
 # Signs into the account
-# signIn = driver.find_element("xpath", "//a[contains(concat(' ',normalize-space(@class),' '),' top-bar__margined ')]")
-# signIn.click()
-# time.sleep(3)
-# emailField = driver.find_element("xpath", "//input[@id='email']")
-# passwordField = driver.find_element("xpath", "//input[@id='password']")
-# emailField.send_keys(username)
-# passwordField.send_keys(password)
-# rememberMeCheck = driver.find_element("xpath", "//label[contains(concat(' ',normalize-space(@class),' '),' custom-control-label ')]")
-# rememberMeCheck.click()
-# logInButton = driver.find_element("xpath", "//button[contains(concat(' ',normalize-space(@class),' '),' submit-button ')]")
-# logInButton.click()
+signIn = driver.find_element("xpath", "//a[contains(concat(' ',normalize-space(@class),' '),' top-bar__margined ')]")
+signIn.click()
+time.sleep(3)
+emailField = driver.find_element("xpath", "//input[@id='email']")
+passwordField = driver.find_element("xpath", "//input[@id='password']")
+emailField.send_keys(username)
+passwordField.send_keys(password)
+rememberMeCheck = driver.find_element("xpath", "//label[contains(concat(' ',normalize-space(@class),' '),' custom-control-label ')]")
+rememberMeCheck.click()
+logInButton = driver.find_element("xpath", "//button[contains(concat(' ',normalize-space(@class),' '),' submit-button ')]")
+logInButton.click()
 
 time.sleep(4)
 
