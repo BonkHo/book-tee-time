@@ -1,6 +1,5 @@
 import time
 import os
-import pickle
 from dotenv import load_dotenv
 from datetime import datetime, date, timedelta
 from selenium import webdriver
@@ -8,7 +7,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 from webdriver_manager.chrome import ChromeDriverManager
-import undetected_chromedriver as uc
 
 # Loads data from the .env file for username and password
 load_dotenv()
@@ -17,17 +15,13 @@ password = os.getenv("PASSWORD")
 
 # Initialize options for Web Driver
 options = webdriver.ChromeOptions()
-options.headless = True
 options.add_argument("start-maximized")
-options.add_experimental_option("excludeSwitches", ["enable-automation"])
-options.add_experimental_option('useAutomationExtension', False)
-# options.add_experimental_option('detach', True)
-options.add_argument('user-data-dir=selenium') 
-# service = Service(ChromeDriverManager().install())
+options.add_experimental_option('detach', True)
+service = Service(ChromeDriverManager().install())
 
 
 # Initialize the Web Driver and set options
-driver = uc.Chrome(options=options)
+driver = webdriver.Chrome(options=options, service=service)
 # service=Service(ChromeDriverManager().install())
 
 # Initialize current Date and bookDate
@@ -42,14 +36,6 @@ link += bookDate.strftime("%Y-%m-%d")
 driver.get(link)
 driver.maximize_window() 
 
-# Load Cookies
-# try:
-#   cookie = pickle.load(open("cookie.pkl", "rb")) #loading from pickle file
-#   for i in cookie:
-#       driver.add_cookie(i)
-#   print('Cookies added.')
-# except Exception as e:
-#   print(e)
 
 # Signs into the account
 signIn = driver.find_element("xpath", "//a[contains(concat(' ',normalize-space(@class),' '),' top-bar__margined ')]")
@@ -102,11 +88,6 @@ termsConditionsBox = driver.find_element("xpath", "//div[contains(concat(' ',nor
 cardCheckBox.click()
 termsConditionsBox.click()
 
-# Save cookies
-# try:
-#   pickle.dump(driver.get_cookies(), open("cookie.pkl", "wb")) #writing in pickle file
-#   print('Cookie file successfully created.')
-# except Exception as e:
-#   print(e)
+
 
 print("Completed")
