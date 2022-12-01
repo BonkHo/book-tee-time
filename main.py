@@ -62,7 +62,7 @@ playerCountButton.click()
 time.sleep(1)
 optionFour = driver.find_element("xpath", "//div[@id='react-select-Players-option-4']")
 optionFour.click()
-acceptableTimes = ["12:00 PM","12:10 PM", "12:20 PM","12:30 PM"]
+acceptableTimes = ["11:00 AM", "11:10 AM", "11:20 AM", "11:30 AM", "2:10 PM"]
 
 # Loop until Tee time is found
 while (timeSelected == False):
@@ -85,14 +85,13 @@ time.sleep(3)
 publicTimesListings = driver.find_element("xpath", "//h3[contains(concat(' ',normalize-space(@class),' '),' mr-price ')]")
 publicTimesListings.click()
 
-time.sleep(4)
+time.sleep(5)
 
 # Change reservation to 4 people and finish reservation
 cardCheckBox = driver.find_element("xpath", "//div[contains(concat(' ',normalize-space(@class),' '),' custom-radio ')]")
 termsConditionsBox = driver.find_element("xpath", "//div[contains(concat(' ',normalize-space(@class),' '),' custom-checkbox ')]")
 cardCheckBox.click()
 termsConditionsBox.click()
-
 
 
 print("Completed")
