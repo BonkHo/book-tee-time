@@ -92,6 +92,7 @@ cardCheckBox = driver.find_element("xpath", "//div[contains(concat(' ',normalize
 termsConditionsBox = driver.find_element("xpath", "//div[contains(concat(' ',normalize-space(@class),' '),' custom-checkbox ')]")
 cardCheckBox.click()
 termsConditionsBox.click()
-
+submitButton = driver.find_element("xpath", "//button[contains(concat(' ',normalize-space(@class),' '),' purchase-button ')]")
+submitButton.click()
 
 print("Completed")
