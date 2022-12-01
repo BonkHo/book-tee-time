@@ -52,27 +52,32 @@ logInButton.click()
 
 time.sleep(4)
 
-# Creates a list of available Tee Times
+timeSelected = False
+
+
+
+# Sets player count to 4
 playerCountButton = driver.find_element("xpath", "//div[contains(concat(' ',normalize-space(@class),' '),' Rectangle-Player-13 ')]")
 playerCountButton.click()
 time.sleep(1)
 optionFour = driver.find_element("xpath", "//div[@id='react-select-Players-option-4']")
 optionFour.click()
-searchButton = driver.find_element("xpath", "//div/img[contains(concat(' ',normalize-space(@class),' '),' search-btn-img ')]")
-searchButton.click()
-time.sleep(3)
+acceptableTimes = ["12:00 PM","12:10 PM", "12:20 PM","12:30 PM"]
 
-teeTimes = driver.find_elements("xpath", "//span[contains(concat(' ',normalize-space(@class),' '),' start-time ')]")
+# Loop until Tee time is found
+while (timeSelected == False):
+  # Press search button and create Tee times list 
+  searchButton = driver.find_element("xpath", "//div/img[contains(concat(' ',normalize-space(@class),' '),' search-btn-img ')]")
+  searchButton.click()
+  time.sleep(1)
+  teeTimes = driver.find_elements("xpath", "//span[contains(concat(' ',normalize-space(@class),' '),' start-time ')]")
 
-
-# Clicks on the first available Tee Time
-# acceptableTimes = ["12:00 PM","12:10 PM", "12:20 PM","12:30 PM"]
-# for teeTime in teeTimes:
-#   if teeTime.get_attribute("innerHTML") in acceptableTimes:
-#     teeTime.click()
-#     break
-
-teeTimes[0].click()
+  # Clicks on the first available Tee Time
+  for teeTime in teeTimes:
+    if teeTime.get_attribute("innerHTML") in acceptableTimes:
+      teeTime.click()
+      timeSelected = True
+      break
 
 time.sleep(3)
 
