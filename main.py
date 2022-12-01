@@ -1,11 +1,9 @@
 import time
 import os
 from dotenv import load_dotenv
-from datetime import datetime, date, timedelta
+from datetime import date, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import Select
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Loads data from the .env file for username and password
@@ -62,7 +60,7 @@ playerCountButton.click()
 time.sleep(1)
 optionFour = driver.find_element("xpath", "//div[@id='react-select-Players-option-4']")
 optionFour.click()
-acceptableTimes = ["11:00 AM", "11:10 AM", "11:20 AM", "11:30 AM", "2:10 PM"]
+acceptableTimes = ["11:00 AM", "11:10 AM", "11:20 AM", "11:30 AM"]
 
 # Loop until Tee time is found
 while (timeSelected == False):
