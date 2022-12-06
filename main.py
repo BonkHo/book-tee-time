@@ -67,7 +67,7 @@ while (timeSelected == False):
   # Press search button and create Tee times list 
   searchButton = driver.find_element("xpath", "//div/img[contains(concat(' ',normalize-space(@class),' '),' search-btn-img ')]")
   searchButton.click()
-  time.sleep(1)
+  time.sleep(5)
   teeTimes = driver.find_elements("xpath", "//span[contains(concat(' ',normalize-space(@class),' '),' start-time ')]")
 
   # Clicks on the first available Tee Time
